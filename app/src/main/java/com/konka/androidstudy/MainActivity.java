@@ -23,5 +23,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, AnnotationActivity.class));
             }
         });
+        Button proxy = findViewById(R.id.proxy);
+        proxy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 }

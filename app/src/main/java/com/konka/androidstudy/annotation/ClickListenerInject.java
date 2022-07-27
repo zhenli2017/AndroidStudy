@@ -90,9 +90,11 @@ public class ClickListenerInject {
                 //创建动态代理
                 ListenerInvocationHandler listenerInvocationHandler = new ListenerInvocationHandler(object, method, view);
                 Object proxyInstance = Proxy.newProxyInstance(listenerInvocationHandler.getClass().getClassLoader(), new Class[]{listenerType}, listenerInvocationHandler);
+                System.out.println("proxyInstance = "+proxyInstance);
                 //setOnLongClickListener(new View.OnLongClickListener()) 相当于这一句代码
                 Method onClickMethod = view.getClass().getMethod(listenerName, listenerType);
                 //执行onCLick方法,然后交给动态代理执行activity的onCLick()方法
+                //本来这里需要传入一个new View.OnLongClickListener() 的实现类,因为参数是这个,但是这里传入代理,相当于代理做了点击
                 onClickMethod.invoke(view, proxyInstance);
             }
         } catch (NoSuchMethodException e) {
