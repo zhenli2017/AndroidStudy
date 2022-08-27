@@ -1,6 +1,8 @@
 package com.konka.lib;
 
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class MyClass {
 
     public MyClass() {
@@ -15,6 +17,7 @@ public class MyClass {
 
     public static void main(String[] args) {
 MyClass myClass = new MyClass();
+        ReentrantLock
     }
 
 

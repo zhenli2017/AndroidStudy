@@ -51,14 +51,4 @@ public class AnnotationActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.button_1, R.id.button_2})
-    public void onClick(View view) {
-        System.out.println("click = "+view);
-    }
-
-    @OnLongClick({R.id.button_1})
-    public void onLongClick(View view) {
-
-    }
-
 }
