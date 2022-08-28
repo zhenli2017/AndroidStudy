@@ -1,0 +1,51 @@
+1.Launcher启动APP Main Activity
+2.调用到ActivityThread.Main()方法
+    main() :
+        1.Looper.prepareMainLooper();
+        2.ActivityThread thread = new ActivityThread();
+            mResourcesManager = ResourcesManager.getInstance();//创建activityThread对象时获取了ResourcesManager
+        3.thread.attach()
+            获取AMS的binder对象,mgr.attachApplication(mAppThread, startSeq);把APP的一个binder对象传递给AMS
+            class ApplicationThread extends IApplicationThread.Stub //就是一个binder
+        4.Looper.loop();
+3.ActivityManagerService :
+    3.1,attachApplication() -> attachApplicationLocked()
+        经过各种检查后(比如判断对象进程是否已经被拉起过等),调用到 thread.bindApplication() 也就是APP的binder对象
+    3.2,在ActivityThread的binder中调用 bindApplication()方法,里面生成 AppBindData()对象组装APP的相关数据
+        其中 AppBindData.info 是一个 LoadedApk 对象
+    3.3,通过handler发送消息 BIND_APPLICATION
+        -> handleBindApplication(data)
+        -> data.info.makeApplication() 通过这个创建application
+            1.mInstrumentation = cl.loadClass(data.instrumentationName.getClassName()).newInstance();反射创建
+                这个类主要是管理application和activity的创建和生命周期
+            2.data.info.makeApplication()
+                1.创建一个contextImpl
+                2.mInstrumentation.newApplication()也是用反射的方式,并执行了attach方法
+                3.由于这里 mInstrumentation 传的是null,所以没有调用onCreate()
+            3.installContentProviders() 调用contentProvider初始化
+            4.执行application.onCreate()
+    3.4,创建好application后会继续调用到 mStackSupervisor.attachApplicationLocked(app) ,用来创建activity
+        -> 获取一个 ActivityDisplay
+        -> 获取 ActivityStack
+        -> 获取最顶层的 ActivityRecord (这个其实就是配置清单activity的部分)
+        -> realStartActivityLocked()
+            -> ClientTransaction 获取了一个这个对象,并传递APP的binder对象过去
+            -> 生成一个 ResumeActivityItem 或者 PauseActivityItem ,通过 ClientTransaction.setLifecycleStateRequest()保存
+            -> mService.getLifecycleManager().scheduleTransaction(clientTransaction);
+                ClientLifecycleManager 是 AMS启动是创建的,通过他来分发刚才的 clientTransaction
+                -> 调用 clientTransaction.schedule()
+                -> 调用了 APP的binder.scheduleTransaction()
+
+                activityThread :
+                    ->  ActivityThread.this.scheduleTransaction(transaction);
+                    -> 由于ActivityThread 是 ClientTransactionHandler 的子类,刚才的方法就调用到父类的 scheduleTransaction
+                    -> 发送了一个消息 EXECUTE_TRANSACTION
+                    -> 获取刚才AMD的transaction(通过message.obj传递过来) ,通过 TransactionExecutor 执行
+
+                    TransactionExecutor.execute() 主要执行了两个步骤 :
+                        1.executeCallbacks(transaction);
+                            获取 ClientTransactionItem 执行execute,这个 ClientTransactionItem 是AMS在创建 ClientTransaction
+                            时传递进去的 LaunchActivityItem ,通过binder对象 调用 handleLaunchActivity
+                        2.executeLifecycleState(transaction);
+
+

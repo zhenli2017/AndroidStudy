@@ -1,0 +1,8 @@
+1.Launcher到APP的冷启动过程
+2.Instrumentation 有什么作用
+3.APP如何跟AMS通信
+4.applicationContext和activityContext有什么区别
+5.activity.attach()方法重点做了那些事
+6.什么是phonewindow,什么是window
+7.UIThread是什么
+8.mInstrumentation 什么时候赋值给activity
