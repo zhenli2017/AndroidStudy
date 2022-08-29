@@ -10,3 +10,21 @@
 MMU(Memory Management Unit 内存管理单元)
 0 : 为缓存,1 : 已缓存, null : 未分配
 缺页走异常逻辑,把数据回写到磁盘和从磁盘加载数据
+
+
+管道 : 半双工 , 父子进程
+socket : 全双工,不需要进程依赖关系
+共享内存 : 不需要进程依赖关系,拷贝少
+
+性能好,架构好/方便使用,安全
+
+client -> BinderProxy -> BPBinder -> 驱动 -> BBinder -> Stub -> Server端
+
+系统服务注册在  serviceManger里面
+普通服务注册在AMS里面
+
+binder驱动并不是直接传递Parcel ,而是把Parcel对象转换成能识别的数据传递到服务端,然后再重新组装起来
+memoryFile 传递大数据,大图片等
+
+
+binder对象如何传递
