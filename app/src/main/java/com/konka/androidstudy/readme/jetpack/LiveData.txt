@@ -1,0 +1,14 @@
+setValue() 和 postValue() 有什么区别
+postValue()会一直生成runnable吗
+多次调用 postValue() 会发生什么情况
+version 是什么,有什么用
+
+如果正在 mDispatchingValue ,那么重复发送没有用
+
+可以重复添加同一个observer吗
+
+如果observer.shouldBeActive()返回false,那么就不会分发(也就是生命周期不是start或者resume)
+observeForever()就是创建了一个 AlwaysActiveObserver,他的 shouldBeActive() 一直返回true
+如果observer.version>=version,那么就不会分发
+
+数据倒灌问题

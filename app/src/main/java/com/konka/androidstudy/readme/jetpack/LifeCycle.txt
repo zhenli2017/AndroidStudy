@@ -1,0 +1,13 @@
+生命周期的回调
+ComponentActivity 实现了 LifecycleOwner接口 ,所以可以通过getLifeCycle()获取对象
+
+getLifeCycle() 返回的实际上是 LifecycleRegistry对象,就是一个成员属性,在activity创建的时候直接就new好了
+
+LifecycleRegistry 内部通过 WeakReference 持有 LifecycleOwner(也就是activity对象)
+
+通过 addObserver()新增一个观察者,包装成 ObserverWithState 对象
+注意,新增的一个observer的状态如果不是destroy那么就是 INITIALIZED ,此时会判断当前activity的状态,然后分发给这个observer
+也就是如果activity已经走完了onCreate(),onStart(),onResume(),此时新增一个observer,那么会立即回调这三个状态
+
+在 ComponentActivity onCreate方法中调用  ReportFragment.injectIfNeededIn(this);添加了一个fragment
+通过这个fragment的生命周期回调,然后通过getActivity().getLifeCycle()去分发生命周期

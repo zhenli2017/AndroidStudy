@@ -9,15 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidStudy">
+        <activity
+            android:name=".jetpack.SaveStateActivity"
+            android:exported="false" />
+
         <service
             android:name=".jump.JumpService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".jump.ActivityTwo"
             android:exported="false"
-            android:launchMode="standard"
+            android:launchMode="singleInstance"
             android:taskAffinity="com.konka.androidstudy.two" />
         <activity
             android:name=".jump.ActivityOne"
@@ -34,7 +38,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

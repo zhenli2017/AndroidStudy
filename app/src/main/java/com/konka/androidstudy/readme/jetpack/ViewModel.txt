@@ -1,0 +1,27 @@
+viewModel viewModelProvider viewModelStoreOwner 关系图
+
+viewModelProvider 获取
+
+AndroidViewModelFactory 和 NewInstanceFactory 区别
+
+
+public class ViewModelStore {
+    private final HashMap<String, ViewModel> mMap = new HashMap<>();
+
+ComponentActivity 实现 了ViewModelStoreOwner接口
+    NonConfigurationInstances
+
+getViewModelStore()
+    1.判断viewModelStore是不是为空,为null的话先从 NonConfigurationInstances.viewModelStore 获取,
+        如果也为null,那么new一个,同时保存到 NonConfigurationInstances 上
+
+onRetainNonConfigurationInstance()上会创建一个 NonConfigurationInstances对象,同时赋值当前的viewmodelstore
+
+在activity onDestroy的时候会调用这个方法onRetainNonConfigurationInstance(),然后把对象 NonConfigurationInstances对象
+赋值给ActivityClientRecord的 lastNonConfigurationInstances
+
+在activity 再次创建的时候,在attach方法上会获取 ActivityClientRecord.lastNonConfigurationInstances的值,然后赋值给新的activity
+
+viewModel缺点
+使用ViewModel组件来管理数据，但ViewModel只能当页面因配置变更而重建时才能复用，
+但如果是内存不足或者电量不足等系统原因导致的页面被回收时ViewModel是不会被复用的。

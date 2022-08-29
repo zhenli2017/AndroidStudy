@@ -1,0 +1,24 @@
+保存/恢复activity状态
+保存/恢复fragment状态
+保存/恢复viewModel状态
+
+onSaveInstanceState 调用时机
+targetSdkVersion 为 28 及以后：在 onStop()后 执行
+targetSdkVersion 高于 11 且低于28：在 onStop()前 执行
+targetSdkVersion 低于 11：在 onPause() 前 执行
+
+
+1.viewModel 需要增加构造函数 SavedStateHandle
+2.写入和获取
+fun setValue(value: String) = state.set(key, value)
+fun getValue(): LiveData<String> = state.getLiveData(key)
+
+3.创建的provider是 SavedStateViewModelFactory extends ViewModelProvider.KeyedFactory
+    内部重写了 create 方法
+    1.如果没有 SavedStateHandle 的构造函数,那么使用默认的factory创建viewModel
+    2.创建 SavedStateHandleController ,传入 mSavedStateRegistry, mLifecycle
+        这里会创建一个 SavedStateHandle
+        通过 attachToLifecycle 把 SavedStateHandle 注册到activity提供的controller的registry上
+    3.通过 newInstance 创建viewModel对象
+    4.viewmodel.setTagIfAbsent(TAG_SAVED_STATE_HANDLE_CONTROLLER, controller);
+    5.return viewModel
