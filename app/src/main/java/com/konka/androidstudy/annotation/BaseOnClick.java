@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  * }
  * });
  * 1.方法名 : setOnClickListener
- * 2.对象  : View.OnClickListener
+ * 2.对象.txt  : View.OnClickListener
  * 3.执行的方法 : onClick
  */
 @Target(ElementType.ANNOTATION_TYPE)
@@ -24,7 +24,7 @@ public @interface BaseOnClick {
     //方法名
     String listenerName();
 
-    //对象
+    //对象.txt
     Class<?> listenerType();
 
     //执行的方法
