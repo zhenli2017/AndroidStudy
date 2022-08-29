@@ -9,30 +9,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidStudy">
+        <service
+            android:name=".jump.JumpService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".jump.ActivityTwo"
             android:exported="false"
-            android:taskAffinity="com.konka.androidstudy.two"
-            android:launchMode="standard" />
+            android:launchMode="standard"
+            android:taskAffinity="com.konka.androidstudy.two" />
         <activity
             android:name=".jump.ActivityOne"
             android:exported="true"
             android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".annotation.AnnotationActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

@@ -6,3 +6,6 @@
 6.什么是phonewindow,什么是window
 7.UIThread是什么
 8.mInstrumentation 什么时候赋值给activity
+9.AMS是进程还是线程,存在哪里
+
+viewrootimpl 在哪里创建,有多少个

@@ -12,4 +12,25 @@
         android:layout_width="match_parent"
         android:text="button one"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/button_1"
+        android:layout_width="match_parent"
+        android:text="start_service"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/button_2"
+        android:layout_width="match_parent"
+        android:text="stop_service"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/button_3"
+        android:layout_width="match_parent"
+        android:text="bind_service"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/button_4"
+        android:layout_width="match_parent"
+        android:text="unbind_service"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

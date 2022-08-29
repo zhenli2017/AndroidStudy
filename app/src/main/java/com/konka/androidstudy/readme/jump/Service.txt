@@ -1,0 +1,41 @@
+startService
+I: JumpService
+I: onCreate
+I: onStartCommand //多次调用startService
+I: onStartCommand
+I: onStartCommand
+I: onStartCommand
+I: onStartCommand
+I: onStartCommand
+I: onStartCommand
+I: onDestroy //多次调用stopService 只会调用一次onDestroy,不会报错
+
+
+bindService,多次调用也是只会走一次,不会多次调用onBind
+I: JumpService
+I: onCreate
+I: onBind
+I: onServiceConnected
+
+unBind ,多次调用会崩溃,抛出:java.lang.IllegalArgumentException: Service not registered:
+I: onUnbind
+I: onDestroy
+
+
+先调用startService ,在调用bindService,跟原来的生命周期一致,此时调用stopService,没有反应,不会走onDestroy,走unBindService才会destroy
+I: JumpService
+I: onCreate
+I: onStartCommand
+I: onStartCommand
+I: onStartCommand
+I: onBind
+I: onServiceConnected
+I: onStartCommand
+I: onStartCommand
+I: onStartCommand
+I: onStartCommand
+
+
+如果先调用bindService,那么service已经被创建,再调用startService,只会不断的走 onStartCommand()方法
+
+

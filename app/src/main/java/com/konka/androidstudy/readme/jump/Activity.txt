@@ -1,0 +1,81 @@
+Activity 生命周期
+ActivityOne standard
+ActivityTwo standard
+
+ActivityOne onCreate
+ActivityOne onStart
+ActivityOne onPause
+ActivityTwo onCreate
+ActivityTwo onResume
+ActivityOne onStop
+
+================================
+ActivityTwo singleTop 不断的启动 ActivityTwo
+ActivityTwo onPause
+ActivityTwo onNewIntent
+ActivityTwo onResume
+
+从Home键返回
+ActivityTwo onRestart
+ActivityTwo onStart
+ActivityTwo onResume
+
+息屏
+ActivityTwo onPause
+ActivityTwo onStop
+亮屏
+ActivityTwo onRestart
+ActivityTwo onStart
+ActivityTwo onResume
+
+================================
+ActivityOne singleTask
+ActivityTwo standard
+
+ActivityTwo 启动 ActivityOne
+I: ActivityTwo onPause
+I: ActivityOne onRestart
+I: ActivityOne onStart
+I: ActivityOne onNewIntent
+I: ActivityOne onResume
+I: ActivityTwo onStop
+I: ActivityTwo onDestroy
+
+打开ActivityTwo的情况下,按Home键
+I: ActivityTwo onPause
+I: ActivityTwo onStop
+I: ActivityTwo onDestroy
+I: ActivityOne onRestart
+I: ActivityOne onStart
+I: ActivityOne onNewIntent
+I: ActivityOne onResume
+
+打开ActivityTwo的情况下,息屏和亮屏,ActivityTwo没有被销毁
+I: ActivityTwo onPause
+I: ActivityTwo onStop
+I: ActivityTwo onRestart
+I: ActivityTwo onStart
+I: ActivityTwo onResume
+
+================================
+ActivityOne singleTask
+ActivityTwo singleInstance
+生命周期和普通的没什么区别,市值activity栈不一样了
+
+
+指定activity在哪个栈上
+如果在activity标签内,那么表示这个activity在哪个栈
+如果在application标签内,表示这个application下面的activity都在这个栈内
+如果没有指定值,那么用默认的包名作为值
+在activity中通过 getTaskId() 可以获取当前activity在哪个栈上
+android:taskAffinity="com.konka.androidstudy.two"
+
+这个属性单独使用不会生效,需要配合 Intent.FLAG_ACTIVITY_NEW_TASK 或者 allowTaskReparenting
+Intent.FLAG_ACTIVITY_NEW_TASK :启动时会判断是否已经存在对应的栈,有就直接把activity放进去,没有就新建一个栈
+
+一个activity所在的默认栈,是启动他的那个activity所在的栈,也就是如果是其他进程启动的,那么这个activity会加入到其他进程的栈中
+allowTaskReparenting : 一个activity运行时,可以重新指定自己所在的栈
+
+
+
+

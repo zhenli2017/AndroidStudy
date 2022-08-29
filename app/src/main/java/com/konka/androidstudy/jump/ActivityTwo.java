@@ -22,6 +22,8 @@ public class ActivityTwo extends AppCompatActivity {
                 startActivity(new Intent(ActivityTwo.this, ActivityOne.class));
             }
         });
+        int taskId = getTaskId();
+        System.out.println("ActivityTwo taskId = "+taskId);
     }
 
     @Override
