@@ -1,0 +1,19 @@
+linux 一切皆FD
+有 socketfd,有pipfd,有文件fd
+
+/proc/进程号/fd 可以查看进程下的所有fd
+
+eventfd 是一个计数相关的fd。计数不为零是有可读事件发生，read 之后计数会清零，write 则会递增计数器。
+eventfd 对应的文件内容是一个 8 字节的数字，这个数字是 read/write 操作维护的计数。
+
+首先，write 的时候，累加计数，read 的时候读取计数，并且清零。
+
+只有实现了 file_operation->poll 的调用的“文件” fd 才能被 epoll 管理。eventfd 刚好就实现了这个接口。
+eventfd 如果用 epoll 监听事件，那么都是监听读事件，因为监听写事件无意义
+
+File descriptor = fd 中文名叫做：文件描述符。文件描述符是一个非负整数，本质上是一个索引值（这句话非常重要）。
+
+当打开一个文件时，内核向进程返回一个文件描述符（ open 系统调用得到 ），后续 read、write 这个文件时，
+则只需要用这个文件描述符来标识该文件，将其作为参数传入 read、write 。
+
+https://mp.weixin.qq.com/s?__biz=Mzg3NTU3OTgxOA%3D%3D&chksm=cf3e0786f8498e903b463ac2ddaac2a0fb4cebac7c6cbf02ff02348fbc71dcd80d09a26c4257&idx=1&mid=2247489347&scene=21&sn=e897fd2f3584fe0fe0c011d4e6503274#wechat_redirect

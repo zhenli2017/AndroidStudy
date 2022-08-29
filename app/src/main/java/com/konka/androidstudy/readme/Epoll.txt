@@ -1,1 +1,25 @@
 Epoll 是什么
+
+什么是阻塞
+什么是非阻塞
+select/poll/epoll
+
+select缺陷
+poll只是取消了最大监控文件描述符数限制,使用链表,但是缺陷没有改变
+
+新建epoll描述符==epoll_create()
+epoll_ctrl(epoll描述符，添加或者删除所有待监控的连接) 不频繁调用
+返回的活跃连接 ==epoll_wait（ epoll描述符 ） 频繁调用
+
+epoll是通过内核与用户空间mmap同一块内存实现的
+通过红黑树来保存所有的节点
+
+epoll特别适用于连接数量多，但活动连接较少的情况
+
+epoll_wait的工作流程：
+
+epoll_wait调用ep_poll，当rdlist为空（无就绪fd）时挂起当前进程，直到rdlist不空时进程才被唤醒。
+文件fd状态改变（buffer由不可读变为可读或由不可写变为可写），导致相应fd上的回调函数ep_poll_callback()被调用。
+ep_poll_callback将相应fd对应epitem加入rdlist，导致rdlist不空，进程被唤醒，epoll_wait得以继续执行。
+ep_events_transfer函数将rdlist中的epitem拷贝到txlist中，并将rdlist清空。
+ep_send_events函数（很关键），它扫描txlist中的每个epitem，调用其关联fd对用的poll方法。此时对poll的调用仅仅是取得fd上较新的events（防止之前events被更新），之后将取得的events和相应的fd发送到用户空间（封装在struct epoll_event，从epoll_wait返回）。
