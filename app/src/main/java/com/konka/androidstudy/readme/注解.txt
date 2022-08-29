@@ -1,0 +1,2 @@
+@Target(ElementType.ANNOTATION_TYPE) //作用范围
+@Retention(RetentionPolicy.RUNTIME) //什么时候能获取, RetentionPolicy.CLASS 可以应用在注解处理器上

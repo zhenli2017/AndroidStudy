@@ -1,0 +1,1 @@
+parcel 不是通用的序列化方案,是Android IPC数据传递方案

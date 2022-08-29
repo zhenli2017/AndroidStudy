@@ -25,3 +25,4 @@ onRetainNonConfigurationInstance()上会创建一个 NonConfigurationInstances�
 viewModel缺点
 使用ViewModel组件来管理数据，但ViewModel只能当页面因配置变更而重建时才能复用，
 但如果是内存不足或者电量不足等系统原因导致的页面被回收时ViewModel是不会被复用的。
+解决方法是 使用savestateregistry
