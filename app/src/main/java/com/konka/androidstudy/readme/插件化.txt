@@ -1,0 +1,44 @@
+四大组件的调用
+如果使用插件的资源
+尽可能减少hook系统API，降低兼容难度
+尽量避免宿主的体积增量
+
+
+目的,减小apk的包体积,快速上线新功能
+
+shadow
+问题一：Android 9.0开始限制非公开SDK接口访问
+问题二：插件框架不完善，其本身的代码需要更新、修复
+
+其实PathClassLoader 和 DexClassLoader 都能加载外部的 dex／apk，
+只不过区别是 DexClassLoader 可以指定 optimizedDirectory，也就是 dex2oat 的产物，
+ELF格式的oat文件（ART虚拟机）。PathClassLoader 只能使用系统默认位置。
+但是这个 optimizedDirectory 在 Android 8.1.0 以后也被舍弃了，只能使用系统默认的位置了。
+
+8.0
+ public DexClassLoader(String dexPath, String optimizedDirectory,
+            String librarySearchPath, ClassLoader parent) {
+        super(dexPath, null, librarySearchPath, parent);
+    }
+
+Shadow为什么要求插件和宿主包名一致
+1.因为系统可能会根据包名做一些私有的事情,比如说查看apk的路径等
+    系统就是根据包名来确定apk唯一(签名)
+2.插件和宿主相同,那么就不需要去hook其他位置
+
+shadow 缺点
+1.Fragment代码调试变麻烦了
+2.shadowactivity没有实现所有的方法
+3.增加了一个manager,导致版本管理变多
+
+优点
+不需要大量的埋点activity,因为一个activity可以代理其他的类,而hook的不行
+多进程避免崩溃
+Android的JVM虚拟机不支持Native动态库反加载，所以在同一个进程中相同so库的不同版本即不能同时加载，
+    也不能换着加载，会造成插件和宿主存在so库冲突。
+
+多进程也带来更多复杂性，就是它的缺点了。
+比如，跨进程调用的所有参数都必须是可序列化对象；
+跨进程通信时对面的进程可能没有启动，也可能已经死了；
+跨进程通信出现异常，整个跨进程调用的堆栈不会是连着的，而且异常对象通常是不能序列化跨进程传输的。
+如何控制插件进程退出或重启供另一业务使用。另外，进程的启动速度也比较慢。
