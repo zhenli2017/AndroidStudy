@@ -3,3 +3,25 @@ mAttachedScrap ArrayList
 mChangedScrap ArrayList
 mCachedViews ArrayList
 mRecyclerPool
+
+优化,item高度固定
+recyclerView.setHasFixedSize(true);
+
+使用getExtraLayoutSpace为LayoutManager设置更多的预留空间,避免第二个卡顿
+
+setItemViewCacheSize(int )
+避免创建过多对象
+
+diffutil
+
+onViewAttachedFromWindow()： RecyclerView的item进入屏幕时回调
+onViewDetachedFromWindow()：RecyclerView的item移出屏幕时回调
+
+onAttachedToRecyclerView() ：当 RecyclerView 调用了 setAdapter() 时会触发，新的 adapter 回调 onAttached。
+onDetachedFromRecyclerView()：当 RecyclerView 调用了 setAdapter() 时会触发，旧的 adapter 回调 onDetached
+
+setHasStableIds()／getItemId()：setHasStableIds用来标识每一个itemView是否需要一个唯一标识，
+当stableId设置为true的时候，每一个itemView数据就有一个唯一标识。getItemId()返回代表这个ViewHolder的唯一标识，
+如果没有设置stableId唯一性，返回NO_ID=-1。通过setHasStableIds可以使itemView的焦点固定，
+从而解决RecyclerView的notify方法使得图片加载时闪烁问题。注意：setHasStableIds()必须在 setAdapter() 方法之前调用，
+否则会抛异常。因为RecyclerView.setAdapter后就设置了观察者，设置了观察者stateIds就不能变了。

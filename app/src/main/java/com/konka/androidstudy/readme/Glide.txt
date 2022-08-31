@@ -1,0 +1,34 @@
+
+来简单介绍下Glide的缓存
+    Lrucache原理 ,linkedhashmap原理,什么时候排序
+    内存缓存默认的大小是多少,你设置的是多少,怎么考虑的
+    默认大小是屏幕的宽高*ARGB8888*2
+3. 嗯，具体说一说Glide的三级缓存原理
+4. Glide加载一个一兆的图片（100 * 100），是否会压缩后再加载，放到一个300 * 300的view上会怎样，800*800呢，图片会很模糊，怎么处理？
+
+简单说一下内存泄漏的场景，如果在一个页面中使用Glide加载了一张图片，图片正在获取中，如果突然关闭页面，这个页面会造成内存泄漏吗？
+
+Glide监听生命周期
+    .application 和 后台线程 ,使用单独的glide实例,不监控生命周期
+
+如何设计一个大图加载框架 https://juejin.cn/post/6844904002551808013
+如何处理iamgeview图片乱序
+
+线程池，多少个？ GlideBuilder : 三个,下载,磁盘加载,动画加载
+切换线程的方式是什么
+ 防止OOM onLowMemory 清楚
+
+8.0 bitmap 在native层,以前的是在java层
+bitmap回收通过finalize
+
+相同url无法更新图片 RequestOptions.signature()增加一个签名
+监听图片加载的过程 ,通过target,比如ImageviewTarget
+
+glide如何解析GIF图片
+判断是不是gif图片
+      final int firstThreeBytes = (firstTwoBytes << 8) | reader.getUInt8();
+      if (firstThreeBytes == GIF_HEADER) {
+        return GIF;
+      }
+
+BitmapRegionDecoder

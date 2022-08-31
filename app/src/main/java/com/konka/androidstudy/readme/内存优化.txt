@@ -1,0 +1,7 @@
+内存泄漏的原因
+1.内部类和匿名内部类
+2.集合
+3.资源使用未关闭
+4.static
+5.webview
+6.handler,eventbus
