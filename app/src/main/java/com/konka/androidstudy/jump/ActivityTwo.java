@@ -1,5 +1,6 @@
 package com.konka.androidstudy.jump;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -10,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.konka.androidstudy.R;
 
-public class ActivityTwo extends AppCompatActivity {
+public class ActivityTwo extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

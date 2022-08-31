@@ -1,0 +1,5 @@
+点击事件优化
+mAttachedScrap ArrayList
+mChangedScrap ArrayList
+mCachedViews ArrayList
+mRecyclerPool

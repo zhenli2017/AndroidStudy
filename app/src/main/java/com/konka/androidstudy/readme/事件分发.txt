@@ -1,0 +1,16 @@
+为什么会先交给activity,然后才交给decorView
+事件分发流程
+如何拦截时间
+
+
+父view和子view都能点击,哪个能处理(子view处理)
+1.dispathcTouchEvent()
+2.onTouchListener –> onTouch方法
+3.onTouchEvent()
+4.onClickListener –> onClick方法
+
+父view拦截子view点击事件
+1.子view设置为clickable = false
+2.如果设置了监听,那么需要再次设置为false,因为监听默认打开了
+
+duplicateParentState 子类的根据父类的状态变化

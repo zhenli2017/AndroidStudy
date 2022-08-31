@@ -96,10 +96,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static class MyHolder extends RecyclerView.ViewHolder {
+    public static class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            getLayoutPosition();
         }
     }
 

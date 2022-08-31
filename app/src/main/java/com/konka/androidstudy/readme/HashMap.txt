@@ -1,0 +1,59 @@
+默认长度是多少
+如果设置初始长度为3,那么长度是多少
+为什么要设置成2的倍数
+负载因子是多少
+
+底层数据结构 1.7  1.8
+计算规则 1.7 1.8
+
+实现同步 collections.sync(hashmap)
+hashtable的区别
+什么是快速失败机制
+    并发修改数据的时候导致的数据异常,通过modcount检测,因为每次修改都会增加,如果迭代时和 expectedModCount 不一致就会抛出异常
+
+put 过程
+1.判断table是否为null,为null 就初始化
+2.通过hash值&长度得到角标,获取对应的值,如果为null,那就新创建一个node,并保存
+3.如果不为null,判断key是否相同,hash值,==,equals,然后替换
+4.如果node是TreeNode ,那么用tree方法判断
+5.遍历链表,如果长度大于7,改成红黑树
+6.modcount++,然后判断是否需要扩容
+扩容过程
+
+1.7 :
+    扰动方式
+    先扩容再添加
+    头插法
+    会造成死循环
+
+1.8
+    扰动方式
+    先添加在扩容
+    无效扩容
+    数据被覆盖
+
+优化部分
+1.不用重新计算hash值,因为数组长度不一样了
+
+
+为什么会有ConcurrentHashMap?
+JDK版本	1.7
+底层实现	数组+链表
+数据结构	Segment 数组 + HashEntry 节点
+锁	分段锁，默认并发是16，一旦初始化，Segment 数组大小就固定，后面不能扩容
+put 操作	先获取锁，根据 key 的 hash 值 定位到 Segment ，再根据 key 的 hash 值 找到具体的 HashEntry ，再进行插入或覆盖，最后释放锁
+释放锁	需要显示调用
+
+Segment 继承了Reentranlock
+
+ConcurrentHashMap的get方法是否要加锁，为什么？
+
+ConcurrentHashMap的put()方法
+根据 key 计算出 hashcode 。
+判断是否需要进行初始化。
+即为当前 key 定位出的 Node，如果为空表示当前位置可以写入数据，利用 CAS 尝试写入，失败 则自旋保证成功。
+如果当前位置的 hashcode == MOVED == -1,则需要进行扩容。
+如果都不满足，则利用 synchronized 锁写入数据。
+如果数量大于 TREEIFY_THRESHOLD 则要转换为红黑树。
+
+ConcurrentHashMap 的 Key 和 Value 都不能为 null，而 HashMap 却可以，设计的原因是什么？
