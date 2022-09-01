@@ -22,8 +22,13 @@ import android.widget.TextView;
 import com.konka.androidstudy.annotation.AnnotationActivity;
 import com.konka.androidstudy.jump.ActivityOne;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,12 +49,15 @@ public class MainActivity extends AppCompatActivity {
         myAdapter.setData(list);
 
         Button button = new Button(this);
-        getLifecycle().addObserver(new LifecycleEventObserver() {
-            @Override
-            public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
 
-            }
-        });
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder().build();
+        Request request = new Request.Builder().build();
+        Call call = okHttpClient.newCall(request);
+        try {
+            call.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

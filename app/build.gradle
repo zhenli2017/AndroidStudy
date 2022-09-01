@@ -43,4 +43,6 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0"
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
+
+    implementation  'com.squareup.okhttp3:okhttp:3.14.7'
 }
