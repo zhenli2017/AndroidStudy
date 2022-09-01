@@ -57,3 +57,10 @@ ConcurrentHashMap的put()方法
 如果数量大于 TREEIFY_THRESHOLD 则要转换为红黑树。
 
 ConcurrentHashMap 的 Key 和 Value 都不能为 null，而 HashMap 却可以，设计的原因是什么？
+
+ConcurrentHashMap 1.7
+    有一个Segmeng[] 数据
+    Segmeng 里面又有 hashEntry[] 数组,如果我们要操作数据,那么需要判断是在哪个 Segmeng 里,然后获取锁,然后再去修改
+
+一个ConcurrentHashMap创建后Segment的个数是不能变的，扩容过程过改变的是每个Segment的大小
+

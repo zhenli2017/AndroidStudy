@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.konka.androidstudy.R;
@@ -111,4 +112,9 @@ public class ActivityOne extends AppCompatActivity {
         System.out.println("ActivityOne onNewIntent");
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        System.out.println("ActivityOne onSaveInstanceState = "+this);
+    }
 }
