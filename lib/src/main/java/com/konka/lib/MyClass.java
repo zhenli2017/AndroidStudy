@@ -20,8 +20,34 @@ public class MyClass {
 
 
     public static void main(String[] args) {
-        new B().out();
-    }
 
+        Thread thread_1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("======= 1");
+            }
+        });
+        Thread thread_2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    thread_1.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("====== 2");
+            }
+        });
+        thread_1.start();
+        thread_2.start();
+
+
+
+    }
 
 }

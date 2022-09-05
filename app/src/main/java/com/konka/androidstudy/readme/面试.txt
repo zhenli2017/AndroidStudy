@@ -1,0 +1,54 @@
+什么是线程,什么是进程
+什么是线程通信,什么是进程通信
+线程的状态 : 新建,正在执行,无限期等待,限期等待,阻塞,结束
+为什么创建线程会耗时
+线程池的参数意义和任务新增过程
+线程池是否可以提前创建核心线程,什么方法
+    threadPoolExecutor.prestartCoreThread()
+    threadPoolExecutor.prestartAllCoreThreads()
+线程池是否可以关闭核心线程,什么方法
+    threadPoolExecutor.allowCoreThreadTimeOut(true);
+线程池默认的实现
+    newSingleThreadExecutor	    单个线程的线程池，即线程池中每次只有一个线程工作，单线程串行执行任务
+    newFixedThreadExecutor(n)	固定数量的线程池，没提交一个任务就是一个线程，直到达到线程池的最大数量，然后后面进入等待队列直到前面的任务完成才继续执行
+    newCacheThreadExecutor      （推荐使用）	可缓存线程池，当线程池大小超过了处理任务所需的线程，那么就会回收部分空闲（一般是60秒无执行）的线程，当有任务来时，又智能的添加新线程来执行
+    newScheduleThreadExecutor	大小无限制的线程池，支持定时和周期性的执行线程
+
+线程池第一个任务是怎么执行的
+线程池的状态
+    running,shutdown,stop,TIDYING,terminate,状态流转过程
+线程池如何实现任务获取和关闭
+线程池shutdown和shutdownNow区别
+
+Thread.interrupted();获取中断的状态,并设置为false(不会设置中断的状态为true) thread.interrupt() : 设置中断的状态为true
+线程join(),yeild()
+
+ThreadLocalMap是什么,如何存储数据,key是什么,value是什么,内存泄漏的原因
+CAS 是什么,ABA问题,CAS的优化是什么
+AtomicLong ,int array,refernence
+synchronized 原理和结构,偏向锁,轻量锁(锁重入过程),重量锁膨胀过程,锁优化,自旋,锁消除,在静态方法上和普通方法上有什么区别,和代码块有什么区别
+
+ReentrantLock是什么,流程 AbstractQueuedSynchronizer是什么,流程(个抽象同步队列器，它的作用是提供一个框架，简化程序员对锁，同步控制工具的开发)
+什么是公平锁,什么是非公平锁
+读写锁是什么,流程
+共享锁,监视器
+
+什么是TCP/IP协议,什么TCP,什么是UDP,什么是HTTP,什么是网络四层模型,什么是HTTPS,如何连接,中间人攻击是什么,
+什么是对称加密算法(AES，RC4，3DES),什么是非对称加密算法(RSA,DSA(针对数字签名)),什么是签名,什么是数字指纹,什么是字符集,有哪些
+200,301,302,405,404,501
+HTTP1.0/HTTP1.1/HTTP2.0/HTTP3.0
+HTTP1.1 : 加入range头,支持断点续传,支持keep-alive,让一个tcp链接发送多个http请求,host头处理,支持请求管道化
+HTTP2.0 : 二进制分帧,多路复用,header压缩,服务端推送（server push）
+
+
+OKHttp请求的整体流程是怎样的？
+OKHttp分发器是怎样工作的？
+OKHttp拦截器是如何工作的？
+应用拦截器和网络拦截器有什么区别？
+OKHttp如何复用TCP连接？
+OKHttp空闲连接如何清除？
+OKHttp有哪些优点？
+OKHttp框架中用到了哪些设计模式？
+
+HTTP优化方式
+让你设计一个网络请求框架,你会怎么做
